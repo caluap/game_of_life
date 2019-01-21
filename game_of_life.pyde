@@ -1,6 +1,6 @@
-W = 100
-H = 100
-CELL_SIZE = 4
+W = 90
+H = 90
+CELL_SIZE = 8
 
 state_key = [color(0,0,0), color(255,0,128), color(0,128,255)]
 state = []
@@ -89,7 +89,7 @@ def draw():
     for x in range(W):
         for y in range(H):
             fill(state_key[return_state(x, y)])
-            rect((x-1) * CELL_SIZE, (y-1) * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+            rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
             
     
 def keyReleased():
