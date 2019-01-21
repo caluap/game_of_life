@@ -1,6 +1,6 @@
-W = 200
-H = 200
-CELL_SIZE = 2
+W = 100
+H = 100
+CELL_SIZE = 4
 
 state_key = [color(0,0,0), color(255,0,128), color(0,128,255)]
 state = []
@@ -34,14 +34,22 @@ def sum_neighbors(state, x, y):
             if aux_x == aux_y == 0:
                 pass
             else:
-                i = return_state(state, x + aux_x, y + aux_y)
+                i = return_state(x + aux_x, y + aux_y)
                 sum[i] += 1
 
     return sum
+
+def _x(x):
+    global W
+    return x % W
+
+def _y(y):
+    global H
+    return y % H
     
-def return_state(state, x, y):
-    global H, W
-    return state[x % W][y % W]
+def return_state(x, y):
+    global state
+    return state[_x(x)][_y(y)]
 
         
     
@@ -55,7 +63,7 @@ def advance_state():
                 
         for y in range(H):
             
-            current = return_state(state, x, y)
+            current = return_state(x, y)
             neighbors = sum_neighbors(state, x, y)
             
             # overcrowding
@@ -80,11 +88,25 @@ def draw():
     advance_state()
     for x in range(W):
         for y in range(H):
-            fill(state_key[return_state(state, x, y)])
+            fill(state_key[return_state(x, y)])
             rect((x-1) * CELL_SIZE, (y-1) * CELL_SIZE, CELL_SIZE, CELL_SIZE)
             
     
-
 def keyReleased():
     global state
     state = set_random_state()
+
+def mouseClicked(event):
+    global CELL_SIZE, state
+    if mouseButton == LEFT:
+        c = 1
+    else:
+        c = 2
+    x = mouseX // CELL_SIZE
+    y = mouseY // CELL_SIZE
+    print(x)
+    
+    for aux_x in range(-20,21):
+        for aux_y in range(-20,21):
+            if aux_x % 2 == 1:
+                state[_x(x + aux_x)][_y(y + aux_y)] = c
