@@ -1,27 +1,26 @@
-import pprint
-
 W = 200
-H = 150
-CELL_SIZE = 5
+H = 100
+CELL_SIZE = 3
 
-
+state_key = [color(255,0,0),color(0,255,0)]
 state = []
 
 
 def set_random_state():
-    global W, H
+    global W, H, state_key
     aux_state = []
     for x in range(W):
         aux_state.append([])
         for y in range(H):
-            aux_state[x].append(int(random(2)))
-    return aux_state
-    
+            s = int(random(len(state_key)))
+            aux_state[x].append(s)
+    return aux_state    
 
 
 
 def setup():
     global W, H, CELL_SIZE, state
+    noStroke()
     size((W-2) * CELL_SIZE, (H-2) * CELL_SIZE)
     state = set_random_state()
     
@@ -71,16 +70,10 @@ def advance_state():
     state = new_state
 
 def draw():
-    global W, H, CELL_SIZE, state
+    global W, H, CELL_SIZE, state, state_key
     for x in range(1, W-1):
         for y in range(1, H-1):
-            if state[x][y] == 1:
-                f = 0
-            else:
-                f = 1
-                
-            noStroke()                            
-            fill([0,255][f])
+            fill(state_key[state[x][y]])
             rect((x-1) * CELL_SIZE, (y-1) * CELL_SIZE, CELL_SIZE, CELL_SIZE)
             
     advance_state()
