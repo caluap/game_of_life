@@ -1,3 +1,5 @@
+import csv
+
 W = 108
 H = 108
 CELL_SIZE = 6
@@ -121,9 +123,20 @@ def keyReleased():
         import hashlib
         h = hashlib.md5()
         h.update(str(random(9999)))
-        f = 'output/' + h.hexdigest()[:10] + '.png'
+        f = h.hexdigest()[:10]
+        
         print(f)
-        save(f)
+        path = '/Users/calua/google_drive/Preface/Projetos/sbfoton/evento_2019/piv/sketches/game_of_life'
+        
+        f1 = path + '/output/' + f + '.png'
+        f2 = path + '/output/' + f + '.csv'
+        
+        with open(f2, 'wb') as csv_file:
+            wr = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
+            wr.writerow(state)
+            
+        save(f1)
+        
     else:
         if is_looping:
             noLoop()
