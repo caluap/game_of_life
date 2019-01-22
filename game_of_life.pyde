@@ -1,8 +1,8 @@
 import csv
 
-W = 108/2
-H = 108/2
-CELL_SIZE = 6*2
+W = 108/3
+H = 108/3
+CELL_SIZE = 6
 n_range = 3
 is_looping = True
 
@@ -76,9 +76,9 @@ def advance_state():
             # birth = 0.6 * n_range
             
             # thicky wormy
-            n_range = 3
-            over = 9.5 * n_range
-            birth = 8.5 * n_range
+            # n_range = 3
+            # over = 9.5 * n_range
+            # birth = 8.5 * n_range
             
             # blob city
             # n_range = 5
@@ -91,10 +91,16 @@ def advance_state():
             # birth = 3.8 * n_range #3.8
             
             
-            # maze
+            # maze 
+            n_range = 1
+            over = 5.5 * n_range
+            birth = 3.0 * n_range
+            
+            
+            # random 
             # n_range = 1
-            # over = 6 * n_range
-            # birth = 4 * n_range
+            # over = 5.0 * n_range * random(3)
+            # birth = 4 * n_range * random(4)
             
             # overcrowding
             if neighbors[1] + neighbors[2] > over:
