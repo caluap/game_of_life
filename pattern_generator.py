@@ -86,11 +86,11 @@ def draw_pattern(pattern, x, y):
 
 def main():
     global h, w, state
-    files = ['3aa4cd061d', '0db91342a4', 'a973da1aaf', '3e0bbf4369']
+    files = ['3aa4cd061d', '0db91342a4', 'a973da1aaf', '3e0bbf4369', '4c25a17e6d', 'ca970ad966']
     
 
     # setup     
-    state = read_csv(files[0] + '.csv')
+    state = read_csv(files[4] + '.csv')
     w = len(state)
     h = len(state[0])
     size(w*tile_size, h*tile_size)
