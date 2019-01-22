@@ -20,6 +20,18 @@ def read_csv(filename):
                     aux[len(aux)-1].append(int(c.strip()))
     return aux
     
+def hex2rgb(c):    
+    c = c.strip('#')
+    return tuple(int(c[i:i+2], 16)/255 for i in (0, 2, 4))
+    
+def stroke_hex(c):
+    c2 = hex2rgb(c)
+    stroke(c2[0], c2[1], c2[2])
+    
+def fill_hex(c):
+    c2 = hex2rgb(c)
+    fill(c2[0], c2[1], c2[2])
+
 def read_pattern(x, y):
     return state[x % w][h - 1 - y % h]
 
@@ -51,10 +63,12 @@ def draw_pattern(pattern, x, y):
         rect(x*tile_size, y*tile_size, tile_size, tile_size)
         
     if pattern == 1:
-        stroke(255/255, 0/255, 84/255)
+        # stroke_hex('#9EC6EC')
+        stroke_hex('#FF0054')
         strokeWidth(1)
     elif pattern == 2:
-        stroke(158/255, 19/255, 236/255)
+        stroke_hex('#6BB7FF')
+        stroke_hex('#FFFEEA')
         strokeWidth(1)
     
     center = (x*tile_size + tile_size/2, y*tile_size + tile_size/2)
@@ -80,7 +94,7 @@ def main():
     h = len(state[0])
     size(w*tile_size, h*tile_size)
 
-    fill(64/255, 0/255, 0/255)
+    fill_hex('#381300')
     rect(0,0,width(),height())
     
     for x in range(len(state)):
