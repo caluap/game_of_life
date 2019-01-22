@@ -1,7 +1,7 @@
 import csv
 
-W = 108/3
-H = 108/3
+W = 108
+H = 108
 CELL_SIZE = 6
 n_range = 3
 is_looping = True
@@ -92,15 +92,15 @@ def advance_state():
             
             
             # maze 
-            n_range = 1
-            over = 5.5 * n_range
-            birth = 3.0 * n_range
+            # n_range = 1
+            # over = 5.5 * n_range
+            # birth = 3.0 * n_range
             
             
             # random 
-            # n_range = 1
-            # over = 5.0 * n_range * random(3)
-            # birth = 4 * n_range * random(4)
+            n_range = 3
+            over = n_range * random(15)
+            birth = n_range * random(5)
             
             # overcrowding
             if neighbors[1] + neighbors[2] > over:

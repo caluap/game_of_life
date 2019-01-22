@@ -1,6 +1,6 @@
 import csv
 
-tile_size = 10
+tile_size = 3
 state = []
 path = '/Users/calua/google_drive/Preface/Projetos/sbfoton/evento_2019/piv/sketches/game_of_life/output/'
 
@@ -35,7 +35,7 @@ def fill_hex(c):
 def read_pattern(x, y):
     return state[x % w][h - 1 - y % h]
     
-def draw_diagonals(pattern, patterns, x, y, stro, c):
+def draw_diagonals(pattern, patterns, x, y, stro, c, mode):
     nw = ne = sw = se = False
     if read_pattern(x-1, y-1) in patterns: nw = True    
     if read_pattern(x+1, y-1) in patterns: ne = True    
@@ -48,15 +48,20 @@ def draw_diagonals(pattern, patterns, x, y, stro, c):
     if pattern == 1:
         stroke_hex(c[0])
     elif pattern == 2:
-        stroke_hex(c[1]) 
-
-    if nw: line((x*tile_size, y*tile_size), center)
-    if ne: line((x*tile_size + tile_size, y*tile_size), center)
-    if sw: line((x*tile_size, (y+1)*tile_size), center)
-    if se: line((x*tile_size + tile_size, (y+1)*tile_size), center)
+        stroke_hex(c[1])
+        
+    if mode == 1:
+        if ne and se:
+            line((x*tile_size + tile_size, y*tile_size), center)
+            line((x*tile_size + tile_size, (y+1)*tile_size), center)
+    else:
+        if nw: line((x*tile_size, y*tile_size), center)
+        if ne: line((x*tile_size + tile_size, y*tile_size), center)
+        if sw: line((x*tile_size, (y+1)*tile_size), center)
+        if se: line((x*tile_size + tile_size, (y+1)*tile_size), center)
 
     
-def draw_ortogonals(pattern, patterns,  x, y, stro, c):
+def draw_ortogonals(pattern, patterns,  x, y, stro, c, mode):
     n = e = w = s = False
     if read_pattern(x, y-1) in patterns: n = True    
     if read_pattern(x-1, y) in patterns: w = True    
@@ -69,26 +74,39 @@ def draw_ortogonals(pattern, patterns,  x, y, stro, c):
     if pattern == 1:
         stroke_hex(c[0])
     elif pattern == 2:
-        stroke_hex(c[1])        
+        stroke_hex(c[1])    
+        
+    if mode == 1:
+        if n and s: 
+            line((x*tile_size + tile_size/2, y*tile_size), center)
+            line((x*tile_size + tile_size/2, (y+1)*tile_size), center)
+    else: 
+        if mode == 2:
+            if n and s and w and e: 
+                return
+        if mode == 3:
+            if n:
+                oval((x+0.25)*tile_size, (y-0.25)*tile_size, tile_size/2, tile_size/2)
+            if s: 
+                oval((x+0.25)*tile_size, (y+0.75)*tile_size, tile_size/2, tile_size/2)
 
-    if n: line((x*tile_size + tile_size/2, y*tile_size), center)    
-    if w: line((x*tile_size, y*tile_size + tile_size/2), center)
-    if e: line((x*tile_size + tile_size, y*tile_size + tile_size/2), center)
-    if s: line((x*tile_size + tile_size/2, (y+1)*tile_size), center)
+        else:            
+            if n: line((x*tile_size + tile_size/2, y*tile_size), center)    
+            if s: line((x*tile_size + tile_size/2, (y+1)*tile_size), center)
+            if w: line((x*tile_size, y*tile_size + tile_size/2), center)
+            if e: line((x*tile_size + tile_size, y*tile_size + tile_size/2), center)
 
 
 def draw_pattern(pattern, x, y):
-    patterns = [1, 2]  
-    
     if pattern == 0:
-        return    
-
-    draw_diagonals(pattern, patterns, x, y, 2, ['#FFFEEA','#FF0054'])
-    draw_ortogonals(pattern, patterns, x, y, 2, ['#FFFEEA','#FF0054'])
+        return
+    draw_diagonals(pattern, [1, 2], x, y, 0.5, ['#FF0054','#FFFEEA'], 0)   
+    draw_ortogonals(pattern, [1, 2], x, y, 0.5, ['#FF0054','#FFFEEA'], 0)
+    
 
 def main():
     global h, w, state
-    files = ['3aa4cd061d', '0db91342a4', 'a973da1aaf', '3e0bbf4369', '4c25a17e6d', 'ca970ad966', 'de4fddafec', 'db9c349fd3', 'acffa5f7ed']
+    files = ['3aa4cd061d', '0db91342a4', 'a973da1aaf', '3e0bbf4369', '4c25a17e6d', 'ca970ad966', 'de4fddafec', 'db9c349fd3', 'acffa5f7ed', '59d61a1a87', 'fddc3ae8c6']
     
 
     # setup     
