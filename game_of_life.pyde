@@ -1,6 +1,6 @@
 W = 108
 H = 108
-CELL_SIZE = 10
+CELL_SIZE = 6
 n_range = 3
 is_looping = True
 
@@ -74,14 +74,19 @@ def advance_state():
             # birth = 3 * n_range
             
             # thicky wormy
-            n_range = 3
-            over = 9.5 * n_range
-            birth = 8.5 * n_range
+            # n_range = 3
+            # over = 9.5 * n_range
+            # birth = 8.5 * n_range
             
             # blob city
             # n_range = 5
             # over = 20 * n_range
             # birth = 16 * n_range
+            
+            # somewhat orderly city
+            n_range = 3
+            over = 9.5 * n_range #9.5
+            birth = 3.8 * n_range #3.8
             
             # overcrowding
             if neighbors[1] + neighbors[2] > over:
