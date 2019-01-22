@@ -1,6 +1,6 @@
-W = 108*2
-H = 108*2
-CELL_SIZE = 5
+W = 108
+H = 108
+CELL_SIZE = 10
 n_range = 3
 is_looping = True
 
@@ -109,15 +109,22 @@ def draw():
         for y in range(H):
             fill(state_key[return_state(x, y)])
             rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
-            
     
 def keyReleased():
     global state, is_looping
-    if is_looping:
-        noLoop()
+    if keyCode == 32:
+        import hashlib
+        h = hashlib.md5()
+        h.update(str(random(9999)))
+        f = 'output/' + h.hexdigest()[:10] + '.png'
+        print(f)
+        save(f)
     else:
-        loop()
-    is_looping = not is_looping
+        if is_looping:
+            noLoop()
+        else:
+            loop()
+        is_looping = not is_looping
 
 def mouseClicked():
     global state
