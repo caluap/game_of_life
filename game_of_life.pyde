@@ -1,7 +1,8 @@
-W = 200
-H = 100
-CELL_SIZE = 4
+W = 108*2
+H = 108*2
+CELL_SIZE = 5
 n_range = 3
+is_looping = True
 
 
 state_key = [color(0,0,0), color(255,0,128), color(0,128,255)]
@@ -66,8 +67,21 @@ def advance_state():
             current = return_state(x, y)
             neighbors = sum_neighbors(state, x, y)
             
-            over = 9 * n_range
-            birth = 1 * n_range
+            
+            # chaos city
+            # n_range = 3
+            # over = 9 * n_range
+            # birth = 3 * n_range
+            
+            # thicky wormy
+            n_range = 3
+            over = 9.5 * n_range
+            birth = 8.5 * n_range
+            
+            # blob city
+            # n_range = 5
+            # over = 20 * n_range
+            # birth = 16 * n_range
             
             # overcrowding
             if neighbors[1] + neighbors[2] > over:
@@ -98,25 +112,13 @@ def draw():
             
     
 def keyReleased():
+    global state, is_looping
+    if is_looping:
+        noLoop()
+    else:
+        loop()
+    is_looping = not is_looping
+
+def mouseClicked():
     global state
     state = set_random_state()
-
-def mouseClicked(event):
-    global CELL_SIZE, state
-    if mouseButton == LEFT:
-        c = 1
-    else:
-        c = 2
-    x = mouseX // CELL_SIZE
-    y = mouseY // CELL_SIZE
-    
-    for aux_x in range(-20,21):
-        for aux_y in range(-20,21):
-            if aux_x % 2 == 1:
-                state[_x(x + aux_x)][_y(y + aux_y)] = c
-                
-def mousePressed():
-    noLoop()  # Holding down the mouse activates looping
-
-def mouseReleased():
-    loop()  # Releasing the mouse stops looping draw()
