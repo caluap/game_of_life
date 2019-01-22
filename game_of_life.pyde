@@ -1,6 +1,8 @@
-W = 90
-H = 90
-CELL_SIZE = 8
+W = 200
+H = 100
+CELL_SIZE = 4
+n_range = 3
+
 
 state_key = [color(0,0,0), color(255,0,128), color(0,128,255)]
 state = []
@@ -23,14 +25,14 @@ def setup():
     noStroke()
     size(W * CELL_SIZE, H * CELL_SIZE)
     state = set_random_state()
-    frameRate(10)
+    # frameRate(10)
     
 def sum_neighbors(state, x, y):
-    global state_key
+    global state_key, n_range
     sum = [0]*len(state_key)
     
-    for aux_x in [-1,0,1]:
-        for aux_y in [-1,0,1]:
+    for aux_x in range(-n_range, n_range+1):
+        for aux_y in range(-n_range, n_range+1):
             if aux_x == aux_y == 0:
                 pass
             else:
@@ -49,13 +51,11 @@ def _y(y):
     
 def return_state(x, y):
     global state
-    return state[_x(x)][_y(y)]
-
-        
+    return state[_x(x)][_y(y)]      
     
     
 def advance_state():
-    global W, H, state
+    global W, H, state, n_range
     new_state = [] 
     
     for x in range(W):
@@ -66,17 +66,22 @@ def advance_state():
             current = return_state(x, y)
             neighbors = sum_neighbors(state, x, y)
             
+            over = 9 * n_range
+            birth = 1 * n_range
+            
             # overcrowding
-            if neighbors[1] + neighbors[2] >= 4:
+            if neighbors[1] + neighbors[2] > over:
                 current = 0
             # sexual frustration rule                
-            elif (current == 1 and neighbors[1] == 0) or (current == 2 and neighbors[2] == 0):
+            elif current == 1 and neighbors[1] == 0:
+                current = 0
+            elif current == 2 and neighbors[2] == 0:
                 current = 0
             # birth rule
-            elif neighbors[1] + neighbors[2] == 3:
+            elif neighbors[1] + neighbors[2] < birth:
                 if neighbors[1] > neighbors[2]:
                     current = 1
-                else:
+                elif neighbors[2] > neighbors[1]:
                     current = 2
                 
                         
@@ -104,9 +109,14 @@ def mouseClicked(event):
         c = 2
     x = mouseX // CELL_SIZE
     y = mouseY // CELL_SIZE
-    print(x)
     
     for aux_x in range(-20,21):
         for aux_y in range(-20,21):
             if aux_x % 2 == 1:
                 state[_x(x + aux_x)][_y(y + aux_y)] = c
+                
+def mousePressed():
+    noLoop()  # Holding down the mouse activates looping
+
+def mouseReleased():
+    loop()  # Releasing the mouse stops looping draw()
