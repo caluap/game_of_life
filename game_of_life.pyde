@@ -1,7 +1,7 @@
 import csv
 
-W = 108
-H = 108
+W = 108*2
+H = 108*2
 CELL_SIZE = 6
 n_range = 3
 is_looping = True
@@ -81,9 +81,9 @@ def advance_state():
             # birth = 8.5 * n_range
             
             # blob city
-            # n_range = 5
-            # over = 20 * n_range
-            # birth = 16 * n_range
+            n_range = 5
+            over = 20 * n_range
+            birth = 16 * n_range
             
             # somewhat orderly city
             # n_range = 3
@@ -98,9 +98,9 @@ def advance_state():
             
             
             # random 
-            n_range = 3
-            over = n_range * random(15)
-            birth = n_range * random(5)
+            # n_range = 3
+            # over = n_range * random(15)
+            # birth = n_range * random(5)
             
             # overcrowding
             if neighbors[1] + neighbors[2] > over:

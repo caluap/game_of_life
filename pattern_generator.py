@@ -110,7 +110,7 @@ def main():
     
 
     # setup     
-    state = read_csv(files[7] + '.csv')
+    state = read_csv(files[5] + '.csv')
     w = len(state)
     h = len(state[0])
     size(w*tile_size, h*tile_size)
